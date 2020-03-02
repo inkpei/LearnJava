@@ -121,10 +121,9 @@ Java预留关键字，用于后期扩展用，用法跟final相似，不常用
 
 ### 数组定义初始化
 
-```
-int [] arr = new int [] {1,2,3,4,5}
+<pre><code class="java">int [] arr = new int [] {1,2,3,4,5}
 int [] arr = {1,2,3,4,5}
-```
+</code></pre>
 
 ### 数组拷贝
 
@@ -143,9 +142,8 @@ int [] arr = {1,2,3,4,5}
 
 正确用 `Arrays.asList` 构造列表:
 
-```
-List<E> testList = new ArrayList<E>(Arrays.asList(test));
-```
+<pre><code class="java">List&lt;E&gt; testList = new ArrayList&lt;E&gt;(Arrays.asList(test));
+</code></pre>
 
 ## 类
 
@@ -217,31 +215,28 @@ Iterator，所有的集合类都实现了Iterator接口，这是一个用于遍�
 
 1. 默认无参构造方法,构造默认大小为10 的ArrayList
 
-```
-public ArrayList() {
+<pre><code class="java">public ArrayList() {
         this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
-```
+</code></pre>
 
 2. 指定大小的构造方法
 
-```
-public ArrayList(int initialCapacity) {
-        if (initialCapacity > 0) {
+<pre><code class="java">public ArrayList(int initialCapacity) {
+        if (initialCapacity &gt; 0) {
             this.elementData = new Object[initialCapacity];
         } else if (initialCapacity == 0) {
             this.elementData = EMPTY_ELEMENTDATA;
         } else {
-            throw new IllegalArgumentException("Illegal Capacity: "+
+            throw new IllegalArgumentException(&quot;Illegal Capacity: &quot;+
                                                initialCapacity);
         }
     }
-```
+</code></pre>
 
 3. 传入Collection构造
 
-```
- public ArrayList(Collection<? extends E> c) {
+<pre><code class="java"> public ArrayList(Collection&lt;? extends E&gt; c) {
         elementData = c.toArray();
         if ((size = elementData.length) != 0) {
             // c.toArray might (incorrectly) not return Object[] (see 6260652)
@@ -252,12 +247,11 @@ public ArrayList(int initialCapacity) {
             this.elementData = EMPTY_ELEMENTDATA;
         }
     }
-```
+</code></pre>
 
 ### 扩容机制
 
-```
-// 扩容到指定容量
+<pre><code class="java">
  private void grow(int minCapacity) {
         // overflow-conscious code
         int oldCapacity = elementData.length;
@@ -280,7 +274,7 @@ public ArrayList(int initialCapacity) {
             Integer.MAX_VALUE :
             MAX_ARRAY_SIZE;
     }
-```
+</code></pre>
 
 ###  `ensureCapacity()` 方法
 
@@ -288,21 +282,20 @@ public ArrayList(int initialCapacity) {
 
 ### `RandomAccess` 接口
 
-```
+```java
 public interface RandomAccess {
 }
 ```
 
 该接口是个空接口,是作为一个标识来使用的,标识了实现该接口的类能够实现随机访问,在 `binarySearch()` 中,它判断传入的`List`是否实现了`RandomAccess`接口, 如果是,那么便调用 `indexedBinarySearch`, 否, 调用 `iteratorBinarySearch`
 
-```
-public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key) {
-        if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
+<pre><code class="java">public static &lt;T&gt; int binarySearch(List&lt;? extends Comparable&lt;? super T&gt;&gt; list, T key) {
+        if (list instanceof RandomAccess || list.size()&lt;BINARYSEARCH_THRESHOLD)
             return Collections.indexedBinarySearch(list, key);
         else
             return Collections.iteratorBinarySearch(list, key);
     }
-```
+</code></pre>
 
 ### `ArrayList` 和 `Vector` 的区别
 
@@ -327,7 +320,36 @@ public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T
 
 ## HashMap
 
-`HashMap` 根据键的 `hashCode` 值存储数据，大多数情况下可以直接定位到它的值，因而具有很快的访问速度，但遍历顺序却是不确定的。 **`HashMap` 最多只允许一条记录的键为 `null`，允许多条记录的值为 `null`。** `HashMap` 非线程安全，即任一时刻可以有多个线程同时写 `HashMap`，可能会导致数据的不一致。如果需要满足线程安全，可以用 `Collections` 的 `synchronizedMap` 方法使 `HashMap` 具有线程安全的能力，或者使用 `ConcurrentHashMap` 。
+### 类属性
 
+<pre><code class="java">public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable {
+    // 序列号
+    private static final long serialVersionUID = 362498820763181265L;
+    // 默认的初始容量是16
+    static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4;
+    // 最大容量
+    static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;
+    // 默认的填充因子
+    static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    // 当桶(bucket)上的结点数大于这个值时会转成红黑树
+    static final int TREEIFY_THRESHOLD = 8;
+    // 当桶(bucket)上的结点数小于这个值时树转链表
+    static final int UNTREEIFY_THRESHOLD = 6;
+    // 桶中结构转化为红黑树对应的table的最小大小
+    static final int MIN_TREEIFY_CAPACITY = 64;
+    // 存储元素的数组，总是2的幂次倍
+    transient Node&lt;k,v&gt;[] table;
+    // 存放具体元素的集
+    transient Set&lt;map.entry&lt;k,v&gt;&gt; entrySet;
+    // 存放元素的个数，注意这个不等于数组的长度。
+    transient int size;
+    // 每次扩容和更改map结构的计数器
+    transient int modCount;
+    // 临界值 当实际大小(容量*填充因子)超过临界值时，会进行扩容
+    int threshold;
+    // 加载因子
+    final float loadFactor;
+}
+</code></pre>
 
 
