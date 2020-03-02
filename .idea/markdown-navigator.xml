@@ -101,7 +101,9 @@ tt, code, kbd, samp {
 }
 .prettyprint .pln {
     color:#66D9EF;</cssText>
-      <cssUriHistory />
+      <cssUriHistory>
+        <option name="https://static.segmentfault.com/global/css/global.css" />
+      </cssUriHistory>
     </CssSettings>
   </component>
 </project>

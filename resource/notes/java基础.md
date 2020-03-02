@@ -358,5 +358,314 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     final float loadFactor;
 }
 ```
+#### loadFactor加载因子
+  loadFactor加载因子是控制数组存放数据的疏密程度，loadFactor越趋近于1，那么 数组中存放的数据(entry)也就越多，也就越密，也就是会让链表的长度增加，loadFactor越小，也就是趋近于0，数组中存放的数据(entry)也就越少，也就越稀疏。
+
+  **loadFactor太大导致查找元素效率低，太小导致数组的利用率低，存放的数据会很分散。loadFactor的默认值为0.75f是官方给出的一个比较好的临界值。**
+
+  给定的默认容量为 16，负载因子为 0.75。Map 在使用过程中不断的往里面存放数据，当数量达到了 16 * 0.75 = 12 就需要将当前 16 的容量进行扩容，而扩容这个过程涉及到 rehash、复制数据等操作，所以非常消耗性能。
+
+### Node
+
+```java
+// 继承自 Map.Entry<K,V>
+static class Node<K,V> implements Map.Entry<K,V> {
+       final int hash;// 哈希值，存放元素到hashmap中时用来与其他元素hash值比较
+       final K key;//键
+       V value;//值
+       // 指向下一个节点
+       Node<K,V> next;
+       Node(int hash, K key, V value, Node<K,V> next) {
+            this.hash = hash;
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
+        public final K getKey()        { return key; }
+        public final V getValue()      { return value; }
+        public final String toString() { return key + "=" + value; }
+        // 重写hashCode()方法
+        public final int hashCode() {
+            return Objects.hashCode(key) ^ Objects.hashCode(value);
+        }
+
+        public final V setValue(V newValue) {
+            V oldValue = value;
+            value = newValue;
+            return oldValue;
+        }
+        // 重写 equals() 方法
+        public final boolean equals(Object o) {
+            if (o == this)
+                return true;
+            if (o instanceof Map.Entry) {
+                Map.Entry<?,?> e = (Map.Entry<?,?>)o;
+                if (Objects.equals(key, e.getKey()) &&
+                    Objects.equals(value, e.getValue()))
+                    return true;
+            }
+            return false;
+        }
+}
+```
+
+#### 红黑树节点
+
+```java
+static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
+        TreeNode<K,V> parent;  // 父
+        TreeNode<K,V> left;    // 左
+        TreeNode<K,V> right;   // 右
+        TreeNode<K,V> prev;    // needed to unlink next upon deletion
+        boolean red;           // 判断颜色
+        TreeNode(int hash, K key, V val, Node<K,V> next) {
+            super(hash, key, val, next);
+        }
+        // 返回根节点
+        final TreeNode<K,V> root() {
+            for (TreeNode<K,V> r = this, p;;) {
+                if ((p = r.parent) == null)
+                    return r;
+                r = p;
+       }
+```
+
+### 构造方法
+
+HashMap 中有 4 个构造方法
+```java
+    // 默认构造函数。
+    public HashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR; // all   other fields defaulted
+     }
+     
+     // 包含另一个“Map”的构造函数
+     public HashMap(Map<? extends K, ? extends V> m) {
+         this.loadFactor = DEFAULT_LOAD_FACTOR;
+         putMapEntries(m, false);//下面会分析到这个方法
+     }
+     
+     // 指定“容量大小”的构造函数
+     public HashMap(int initialCapacity) {
+         this(initialCapacity, DEFAULT_LOAD_FACTOR);
+     }
+     
+     // 指定“容量大小”和“加载因子”的构造函数
+     public HashMap(int initialCapacity, float loadFactor) {
+         if (initialCapacity < 0)
+             throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
+         if (initialCapacity > MAXIMUM_CAPACITY)
+             initialCapacity = MAXIMUM_CAPACITY;
+         if (loadFactor <= 0 || Float.isNaN(loadFactor))
+             throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
+         this.loadFactor = loadFactor;
+         this.threshold = tableSizeFor(initialCapacity);
+     }
+```
+
+#### putMapEntries方法
+
+```java
+final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
+    int s = m.size();
+    if (s > 0) {
+        // 判断table是否已经初始化
+        if (table == null) { // pre-size
+            // 未初始化，s为m的实际元素个数
+            float ft = ((float)s / loadFactor) + 1.0F;
+            int t = ((ft < (float)MAXIMUM_CAPACITY) ?
+                    (int)ft : MAXIMUM_CAPACITY);
+            // 计算得到的t大于阈值，则初始化阈值
+            if (t > threshold)
+                threshold = tableSizeFor(t);
+        }
+        // 已初始化，并且m元素个数大于阈值，进行扩容处理
+        else if (s > threshold)
+            resize();
+        // 将m中的所有元素添加至HashMap中
+        for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
+            K key = e.getKey();
+            V value = e.getValue();
+            putVal(hash(key), key, value, false, evict);
+        }
+    }
+}
+```
+
+### put方法
+
+![](.java基础_images/put过程.png)
+
+```java
+public V put(K key, V value) {
+    return putVal(hash(key), key, value, false, true);
+}
+
+final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+                   boolean evict) {
+    Node<K,V>[] tab; Node<K,V> p; int n, i;
+    // table未初始化或者长度为0，进行扩容
+    if ((tab = table) == null || (n = tab.length) == 0)
+        n = (tab = resize()).length;
+    // (n - 1) & hash 确定元素存放在哪个桶中，桶为空，新生成结点放入桶中(此时，这个结点是放在数组中)
+    if ((p = tab[i = (n - 1) & hash]) == null)
+        tab[i] = newNode(hash, key, value, null);
+    // 桶中已经存在元素
+    else {
+        Node<K,V> e; K k;
+        // 比较桶中第一个元素(数组中的结点)的hash值相等，key相等
+        if (p.hash == hash &&
+            ((k = p.key) == key || (key != null && key.equals(k))))
+                // 将第一个元素赋值给e，用e来记录
+                e = p;
+        // hash值不相等，即key不相等；为红黑树结点
+        else if (p instanceof TreeNode)
+            // 放入树中
+            e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+        // 为链表结点
+        else {
+            // 在链表最末插入结点
+            for (int binCount = 0; ; ++binCount) {
+                // 到达链表的尾部
+                if ((e = p.next) == null) {
+                    // 在尾部插入新结点
+                    p.next = newNode(hash, key, value, null);
+                    // 结点数量达到阈值，转化为红黑树
+                    if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                        treeifyBin(tab, hash);
+                    // 跳出循环
+                    break;
+                }
+                // 判断链表中结点的key值与插入的元素的key值是否相等
+                if (e.hash == hash &&
+                    ((k = e.key) == key || (key != null && key.equals(k))))
+                    // 相等，跳出循环
+                    break;
+                // 用于遍历桶中的链表，与前面的e = p.next组合，可以遍历链表
+                p = e;
+            }
+        }
+        // 表示在桶中找到key值、hash值与插入元素相等的结点
+        if (e != null) { 
+            // 记录e的value
+            V oldValue = e.value;
+            // onlyIfAbsent为false或者旧值为null
+            if (!onlyIfAbsent || oldValue == null)
+                //用新值替换旧值
+                e.value = value;
+            // 访问后回调
+            afterNodeAccess(e);
+            // 返回旧值
+            return oldValue;
+        }
+    }
+    // 结构性修改
+    ++modCount;
+    // 实际大小大于阈值则扩容
+    if (++size > threshold)
+        resize();
+    // 插入后回调
+    afterNodeInsertion(evict);
+    return null;
+} 
+```
+
+### resize方法
+
+在 JDK 1.7 中 `resize()` 操作采用的是头插法, 会导致链表倒置, JDK 1.8 中改进了插入方式.
+```java
+final Node<K,V>[] resize() {
+    Node<K,V>[] oldTab = table;
+    int oldCap = (oldTab == null) ? 0 : oldTab.length;
+    int oldThr = threshold;
+    int newCap, newThr = 0;
+    if (oldCap > 0) {
+        // 超过最大值就不再扩充了，就只好随你碰撞去吧
+        if (oldCap >= MAXIMUM_CAPACITY) {
+            threshold = Integer.MAX_VALUE;
+            return oldTab;
+        }
+        // 没超过最大值，就扩充为原来的2倍
+        else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY && oldCap >= DEFAULT_INITIAL_CAPACITY)
+            newThr = oldThr << 1; // double threshold
+    }
+    else if (oldThr > 0) // initial capacity was placed in threshold
+        newCap = oldThr;
+    else { 
+        // signifies using defaults
+        newCap = DEFAULT_INITIAL_CAPACITY;
+        newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+    }
+    // 计算新的resize上限
+    if (newThr == 0) {
+        float ft = (float)newCap * loadFactor;
+        newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ? (int)ft : Integer.MAX_VALUE);
+    }
+    threshold = newThr;
+    @SuppressWarnings({"rawtypes","unchecked"})
+        Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+    table = newTab;
+    if (oldTab != null) {
+        // 把每个bucket都移动到新的buckets中
+        for (int j = 0; j < oldCap; ++j) {
+            Node<K,V> e;
+            if ((e = oldTab[j]) != null) {
+                oldTab[j] = null;
+                // 链表只有一个元素
+                if (e.next == null)
+                    newTab[e.hash & (newCap - 1)] = e;
+                else if (e instanceof TreeNode)
+                    ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+                else { 
+                    Node<K,V> loHead = null, loTail = null;
+                    Node<K,V> hiHead = null, hiTail = null;
+                    Node<K,V> next;
+                    do {
+                        next = e.next;
+                        // 原索引
+                        if ((e.hash & oldCap) == 0) {
+                            if (loTail == null)
+                                loHead = e;
+                            else
+                                loTail.next = e;
+                            loTail = e;
+                        }
+                        // 原索引+oldCap
+                        else {
+                            if (hiTail == null)
+                                hiHead = e;
+                            else
+                                hiTail.next = e;
+                            hiTail = e;
+                        }
+                    } while ((e = next) != null);
+                    // 原索引放到bucket里
+                    if (loTail != null) {
+                        loTail.next = null;
+                        newTab[j] = loHead;
+                    }
+                    // 原索引+oldCap放到bucket里
+                    if (hiTail != null) {
+                        hiTail.next = null;
+                        newTab[j + oldCap] = hiHead;
+                    }
+                }
+            }
+        }
+    }
+    return newTab;
+}
+```
+
+### HashMap 为什么是线程不安全的
+
+在多线程环境下, `resize()`操作会导致循环链表, 导致查询死循环.
+
+### 解决Hash冲突的方法
+
+1. 开放地址法,包含线性探查法,平方探查法,双散列函数法
+2. 拉链法
+3. 再hash法
+4. 建立公共溢出区
 
 
