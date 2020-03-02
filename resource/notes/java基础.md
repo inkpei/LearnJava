@@ -254,9 +254,80 @@ public ArrayList(int initialCapacity) {
     }
 ```
 
+### 扩容机制
+
+```
+// 扩容到指定容量
+ private void grow(int minCapacity) {
+        // overflow-conscious code
+        int oldCapacity = elementData.length;
+        // 扩容到原始数组的 1.5 倍
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        if (newCapacity - minCapacity < 0)
+            // 仍然小于指定容量时
+            newCapacity = minCapacity;
+        // 如果超过最大数组容量
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        // minCapacity is usually close to size, so this is a win:
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+
+    private static int hugeCapacity(int minCapacity) {
+        if (minCapacity < 0) // overflow
+            throw new OutOfMemoryError();
+        return (minCapacity > MAX_ARRAY_SIZE) ?
+            Integer.MAX_VALUE :
+            MAX_ARRAY_SIZE;
+    }
+```
+
+###  `ensureCapacity()` 方法
+
+最好在向 `ArrayList` 添加大量元素时调用此方法,以减少数组扩容的次数.
+
+### `RandomAccess` 接口
+
+```
+public interface RandomAccess {
+}
+```
+
+该接口是个空接口,是作为一个标识来使用的,标识了实现该接口的类能够实现随机访问,在 `binarySearch()` 中,它判断传入的`List`是否实现了`RandomAccess`接口, 如果是,那么便调用 `indexedBinarySearch`, 否, 调用 `iteratorBinarySearch`
+
+```
+public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key) {
+        if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
+            return Collections.indexedBinarySearch(list, key);
+        else
+            return Collections.iteratorBinarySearch(list, key);
+    }
+```
+
+### `ArrayList` 和 `Vector` 的区别
+
+`Vector` 中所有的方法都被 `synchronized` 修饰,是线程安全的,但同步操作带来大量不必要的消耗,因此在单线程环境下,推荐使用 `ArrayList`,多线程下使用 `CopyOnWriteArrayList` 或是利用 `Collections.synchronizedList()` 包装 `ArrayList`
 
 ## LinkedList
 
-## Vector
+![](.java基础_images/LinkedList继承图.png)
+
+### `LinkedList` 和 `ArrayList` 的相同点及区别
+
+1. 是否保证线程安全： ArrayList 和 LinkedList 都是不同步的，也就是不保证线程安全；
+
+2. 底层数据结构： Arraylist 底层使用的是 Object 数组；LinkedList 底层使用的是 双向链表 数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）
+
+3. 插入和删除是否受元素位置的影响： ① ArrayList 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。 比如：执行add(E e) 方法的时候， ArrayList 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置 i 插入和删除元素的话（add(int index, E element) ）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 ② LinkedList 采用链表存储，所以对于add()方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O（1），如果是要在指定位置i插入和删除元素的话（(add(int index, E element)） 时间复杂度近似为o(n))因为需要先移动到指定位置再插入。
+
+4. 是否支持快速随机访问： LinkedList 不支持高效的随机元素访问，而 ArrayList 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于get(int index) 方法)。
+
+5. 内存空间占用： ArrayList的空 间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。
+6. LinkedList 实现了 `Deque` 接口, 可以作为双向队列使用,也可以作为栈来使用.
+
+## HashMap
+
+`HashMap` 根据键的 `hashCode` 值存储数据，大多数情况下可以直接定位到它的值，因而具有很快的访问速度，但遍历顺序却是不确定的。 **`HashMap` 最多只允许一条记录的键为 `null`，允许多条记录的值为 `null`。** `HashMap` 非线程安全，即任一时刻可以有多个线程同时写 `HashMap`，可能会导致数据的不一致。如果需要满足线程安全，可以用 `Collections` 的 `synchronizedMap` 方法使 `HashMap` 具有线程安全的能力，或者使用 `ConcurrentHashMap` 。
+
 
 
