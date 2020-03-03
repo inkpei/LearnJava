@@ -1,3 +1,6 @@
+[TOC]
+
+
 # Java 基础
 
 ## 数据类型 (8种)
@@ -307,6 +310,17 @@ public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T
 
 `Vector` 中所有的方法都被 `synchronized` 修饰,是线程安全的,但同步操作带来大量不必要的消耗,因此在单线程环境下,推荐使用 `ArrayList`,多线程下使用 `CopyOnWriteArrayList` 或是利用 `Collections.synchronizedList()` 包装 `ArrayList`
 
+### modCount++ 的作用
+
+在一个迭代器初始的时候会赋予它调用这个迭代器的对象的modCount，如何在迭代器遍历的过程中，一旦发现这个对象的mcount和迭代器中存储的mcount不一样那就抛异常
+
+**Fail-Fast 机制**
+
+我们知道 java.util.HashMap 不是线程安全的，因此如果在使用迭代器的过程中有其他线程修改了map，那么将抛出 ConcurrentModificationException，这就是所谓fail-fast策略。这一策略在源码中的实现是通过 modCount 域，modCount 顾名思义就是修改次数，对HashMap 内容的修改都将增加这个值，那么在迭代器初始化过程中会将这个值赋给迭代器的 expectedModCount。在迭代过程中，判断 modCount 跟 expectedModCount 是否相等，如果不相等就表示已经有其他线程修改了 Map：注意到 modCount 声明为 volatile，保证线程之间修改的可见性。
+
+所以推荐使用 Iterator 遍历
+
+
 ## LinkedList
 
 ![](.java基础_images/LinkedList继承图.png)
@@ -462,6 +476,28 @@ HashMap 中有 4 个构造方法
          this.threshold = tableSizeFor(initialCapacity);
      }
 ```
+
+### TableSizeFor方法
+
+```java
+static final int tableSizeFor(int cap) {
+    int n = cap - 1;
+    n |= n >>> 1;
+    n |= n >>> 2;
+    n |= n >>> 4;
+    n |= n >>> 8;
+    n |= n >>> 16;
+    return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+}
+```
+
+tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。该算法首先通过位移操作将让最高位的1后面的位全变为1。最后再让结果n+1，即得到了2的整数次幂的值了。
+
+```java
+int n = cap - 1;
+```
+
+让cap-1再赋值给n的目的是另找到的目标值大于或等于原值。例如二进制1000，十进制数值为8。如果不对它减1而直接操作，将得到答案10000，即16。显然不是结果。减1后二进制为111，再进行操作则会得到原来的数值1000，即8。
 
 #### putMapEntries方法
 
@@ -659,7 +695,11 @@ final Node<K,V>[] resize() {
 
 ### HashMap 为什么是线程不安全的
 
-在多线程环境下, `resize()`操作会导致循环链表, 导致查询死循环.
+- 同时进行put操作时,可能会导致值丢失
+- 同时进行put和get时,可能get到null
+- jdk 1.7 中,resize()会导致循环链表,引起死循环. JDK 1.8 已修复
+
+  [详情](https://juejin.im/post/5c8910286fb9a049ad77e9a3)
 
 ### 解决Hash冲突的方法
 
@@ -668,4 +708,35 @@ final Node<K,V>[] resize() {
 3. 再hash法
 4. 建立公共溢出区
 
+## `CurrentHashMap`
 
+### 为什么使用 `CurrentHashMap`
+
+1. `HashMap` 在多线程环境下不安全
+2. `HashTable` 全部采用 `synchronized` 同步, 在线程竞争激烈的情况下,效率很低
+3. `Current HashMap` 采用分段锁的思想,将整个 `Table` 数组分为多个不同的数据段,每个段都有一个独立的锁,极大的提升了读写的效率.
+
+### JDK 1.7 和 JDK 1.8 中 `CurrentHashMap` 有什么区别
+
+- 在 1.7 中, `CurrentHashMap` 使用的是 `Segment` 数组和 `HashEntry` 数组相结合的方式来实现分段锁的, `Segment` 是一种可重入锁，是一种数组和链表的结构，一个 `Segment` 中包含一个 `HashEntry` 数组，每个 `HashEntry` 又是一个链表结构。
+- 在 1.8 中, `Segment` 数组被去除了, 主要是基于 CAS 操作保证保证数据的获取以及使用 `synchronized` 关键字对相应数据段加锁实现了主要功能，这进一步提高了并发性。
+
+### `CurrentHashMap` 源码
+
+  [源码分析](https://www.jianshu.com/p/c0642afe03e0)
+
+### HashSet
+
+1. 是基于HashMap实现的，默认构造函数是构建一个初始容量为16，负载因子为0.75 的HashMap。封装了一个 HashMap 对象来存储所有的集合元素，所有放入 HashSet 中的集合元素实际上由 HashMap 的 key 来保存，而 HashMap 的 value 则存储了一个 PRESENT，它是一个静态的 Object 对象。
+
+2. HashSet 要求元素重写 Object 类的 hashCode 和 equals 方法，并且判断两个对象是否相等，必须 equals 和 hashCode 都相同才行
+
+3. HashSet的其他操作都是基于HashMap的。
+
+### TreeMap
+
+### LinkedHashMap
+
+![](.java基础_images/LinkedHashMap.png)
+
+LinkedHashMap 是 HashMap 的子类,在原有 HashMap 数据结构的基础上,它还维护着一个双向链表链接所有entry,这个链表定义了迭代顺序，通常是数据插入的顺序。
