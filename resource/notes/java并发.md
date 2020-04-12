@@ -308,6 +308,10 @@ synchronized 是 Java 中的关键字, 是利用锁的机制来实现同步的�
 
 ### Synchronized 原理
 
+[详情](https://juejin.im/post/5b42c2546fb9a04f8751eabc)
+
+[详情2](https://juejin.im/post/5c936018f265da60ec281bcb)
+
 ```java
 public class SynchronizedDemo {
     public void method() {
@@ -346,6 +350,8 @@ public class SynchronizedMethod {
 
 ## 锁(LOCK)
 
+[详情](https://juejin.im/post/5c936018f265da60ec281bcb)
+[锁膨胀详细过程](https://blog.csdn.net/lengxiao1993/article/details/81568130)
 ### 死锁
 
 当线程A持有独占锁a，并尝试去获取独占锁b的同时，线程B持有独占锁b，并尝试获取独占锁a的情况下，就会发生AB两个线程由于互相持有对方需要的锁，而发生的阻塞现象，我们称为死锁
