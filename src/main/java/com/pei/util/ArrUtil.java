@@ -2,6 +2,7 @@ package com.pei.util;
 
 import com.sun.deploy.security.WSeedGenerator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
@@ -16,11 +17,6 @@ public class ArrUtil {
 
     public static int seed = 4001;
 
-    public static void main(String[] args) {
-
-        print(getArrs(10,10));
-
-    }
 
     public static void print(int[] arr) {
         System.out.println("// " + Arrays.toString(arr));
@@ -108,4 +104,12 @@ public class ArrUtil {
     public static int[][] getArrs(int m, int n, boolean isDup) {
         return getArrs(m,n,10,isDup,false);
     }
+
+
+
+
+    public static void main(String[] args) {
+
+    }
+
 }

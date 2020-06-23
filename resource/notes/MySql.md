@@ -1,8 +1,11 @@
+# 博客
+
+* https://www.cnblogs.com/geaozhang/category/1326927.html
+* 
+
 # 文章
 
 [数据库两大神器【索引和锁】](https://juejin.im/post/5b55b842f265da0f9e589e79)
-
-[深入浅出数据库原理](https://zhuanlan.zhihu.com/p/23624390)
 
 [数据库事务、隔离级别和锁](https://www.jianshu.com/p/cb97f76a92fd)
 
@@ -23,3 +26,13 @@
 [详细分析MySQL事务日志(redo log和undo log)](https://www.cnblogs.com/f-ck-need-u/archive/2018/05/08/9010872.html)
 
 [MySql主从备份](https://zhuanlan.zhihu.com/p/50597960)
+
+[mysql double writes](https://www.cnblogs.com/geaozhang/p/7241744.html)
+
+[Innodb三大特性之insert buffer](https://www.cnblogs.com/chenpingzhao/p/4883884.html)
+
+[触发器](https://www.cnblogs.com/geaozhang/p/6819648.html)
+
+[视图](https://www.cnblogs.com/geaozhang/p/6792369.html)
+
+[explain](https://juejin.im/post/5ee894a05188253683551567?utm_source=gold_browser_extension)

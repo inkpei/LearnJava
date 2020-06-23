@@ -58,7 +58,7 @@ String 是被 `final` 修饰的, 因此不可修改, 修改推荐使用 `StringB
   `StringBuilder` 为字符串变量是可变对象.
 - **性能**：String 每次修改相当于生成一个新对象, 因此性能最低. StringBuffer 使用
   synchronized 来保证线程安全, 性能优于 String, 但不如 `StringBuilder`.
-- **线程安全**：`StringBuilder` 为非线程安全类, `StringBuffe`r 为线程安全类.
+- **线程安全**：`StringBuilder` 为非线程安全类, `StringBuffer` 为线程安全类.
 
 ### String 不可变性都有哪些好处
 
@@ -105,7 +105,7 @@ java
 该运算符用于操作对象实例, 检查该对象是否是一个特定类型,
 是否继承自某个类,或是实现了某个接口.
 
-### 'const'
+### `const`
 
 Java预留关键字, 用于后期扩展用, 用法跟final相似, 不常用
 
@@ -137,7 +137,7 @@ int [] arr = {1,2,3,4,5}
 使用该方法可以将一个数组转变为列表,当转换基础数据类型数组时,因为其接收的是泛型参数,而基础类型不能泛型话,所以不能返回期待中的数组列表,而是会将原始数组作为对象元素返回一个长度为1的列表
 
 `Arrays.asList` 使用的是 `Arrays`
-内部实现的一个类,而不是`java.util.ArrayList`, 所以针对ArrayList的操作,如`add`
+内部实现的一个类, 继承自 `AbstractList`, 并不是`java.util.ArrayList`, 所以针对ArrayList的操作,如`add`
 `remove` 等均未实现.
 
 返回的列表底层任然引用的是原始数组,所以针对列表的操作仍会影响原始数组.
@@ -162,8 +162,9 @@ List<E> testList = new ArrayList<E>(Arrays.asList(test));
 ### 重载和重写的区别
 
 **重载**:
-重载发生在同一个类的不同方法之间,重载要求方法名相同,参数列表必须不同(顺序,个数,类型)
-**重写**: 重写发生在父子类之间,子类通过重写从父类继承的方法来实现自身独特的行为.
+重载发生在同一个类的不同方法之间,重载要求方法名相同,参数列表必须不同(顺序,个数,类型), 重载发生在编译期, 根据函数参数列表确定.
+
+**重写**: 重写发生在父子类之间,子类通过重写从父类继承的方法来实现自身独特的行为. 重写发生在运行期, 因为只有在运行时才知道调用的是哪个方法.
 重写父类方法要求更大范围的修饰符和更小范围的异常抛出
 
 ### 抽象类和接口的区别
@@ -205,7 +206,7 @@ List<E> testList = new ArrayList<E>(Arrays.asList(test));
 //饿汉式
 public class Singleton {
     private static Singleton instance = new Singleton();
-    public Singleton(){}
+    private Singleton(){}
     public static Singleton getInstance(){
         return instance;
     }
@@ -308,10 +309,56 @@ public class SingletonManager {
 
   在序列化的时候Java仅仅是将枚举对象的name属性输出到结果中，反序列化的时候则是通过java.lang.Enum的valueOf方法来根据名字查找枚举对象。同时，编译器是不允许任何对这种序列化机制的定制的，因此禁用了writeObject、readObject、readObjectNoData、writeReplace和readResolve等方法。
 
+
+### try finally return
+
+#### finally 语句块并不是一定会执行到
+
+1. try语句没有被执行到，如在try语句之前就返回了，这样finally语句就不会执行，这也说明了finally语句被执行的必要而非充分条件是：相应的try语句一定被执行到。
+
+2. 在try块中有System.exit(0); 这样的语句，System.exit(0); 是终止Java虚拟机JVM的，连JVM都停止了，所有都结束了，当然finally语句也不会被执行到。
+
+#### finally 是否会覆盖 return
+
+try语句在返回前，将其他所有的操作执行完，保留好要返回的值，而后转入执行finally中的语句，而后分为以下三种情况：
+
+1. 如果finally中有return语句，则会将try中的return语句”覆盖“掉，直接执行finally中的return语句，得到返回值，这样便无法得到try之前保留好的返回值。
+
+2. 如果finally中没有return语句，也没有改变要返回值，则执行完finally中的语句后，会接着执行try中的return语句，返回之前保留的值。
+
+3. 如果finally中没有return语句，但是改变了要返回的值，这里有点类似与引用传递和值传递的区别，分以下两种情况，：
+    - 如果return的数据是基本数据类型或文本字符串，则在finally中对该基本数据的改变不起作用，try中的return语句依然会返回进入finally块之前保留的值。
+    
+    - 如果return的数据是引用数据类型，而在finally中对该引用数据类型的属性值的改变起作用，try中的return语句返回的就是在finally中改变后的该属性的值。
+
+### 父子类加载顺序
+
+1. 父类静态
+
+    - 父类静态属性（成员变量）
+    - 父类静态代码块
+    
+2. 子类静态
+
+    - 子类静态属性 
+    - 子类静态代码块 
+    
+3. 父类非静态
+
+    - 父类非静态属性 
+    - 父类非静态代码块
+    - 父类构造器 
+    
+4. 子类非静态
+
+    - 子类非静态属性 
+    - 子类非静态代码块
+    - 子类构造器
+
 ## IO
 
-[NIO详解](https://www.cnblogs.com/pony1223/p/8138233.html
-)
+[NIO详解](https://segmentfault.com/a/1190000021091737?utm_source=tag-newest)
+[零拷贝](https://cloud.tencent.com/developer/article/1488087)
 
 ## 反射
 
@@ -378,7 +425,9 @@ public Method getMethod(String name, Class<?>... parameterTypes)
 主要是这几个方法，在此不再赘述：
 
 `getFiled`：访问公有的成员变量
+
 `getDeclaredField`：所有已声明的成员变量，但不能得到其父类的成员变量
+
 `getFileds` 和 `getDeclaredFields` 方法用法同上（参照 Method）。
 
 #### 6. 调用方法
@@ -395,6 +444,7 @@ public static void main(String[] args) throws IllegalAccessException, Instantiat
         System.out.println(result);
     }
 ```
+#### [反射低效的原因](https://juejin.im/post/5da33b2351882509334fc0d3)
 
 ### 反射与IOC
 
@@ -497,6 +547,10 @@ CGLIB 优势:
 
 ### CGlib 对接口实现代理
 
+[Cglib动态代理详解](https://dannashen.github.io/2019/05/09/Cglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/)
+
+[cglib死循环](https://juejin.im/post/5a8f750af265da4e983f2369)
+
 ```java
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -541,6 +595,9 @@ public class CGLibFactory implements MethodInterceptor {
 ```
 
 ## 泛型
+
+[深入理解Java 泛型](https://www.cnblogs.com/jingmoxukong/p/12049160.html)
+[JAVA 泛型中的通配符 T，E，K，V，？](https://juejin.im/post/5d5789d26fb9a06ad0056bd9)
 
 Java 泛型（generics）是 JDK 5 中引入的一个新特性，泛型提供了编译时类型安全检测机制，该机制允许程序员在编译时检测到非法的类型。**泛型的本质是参数化类型**，也就是说所操作的数据类型被指定为一个参数，在Java集合框架里使用的非常广泛。
 
@@ -742,6 +799,8 @@ public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T
 6. LinkedList 实现了 `Deque` 接口, 可以作为双向队列使用,也可以作为栈来使用.
 
 ## HashMap
+
+[深入了解 HashMap](https://blog.csdn.net/login_sonata/article/details/76598675)
 
 ### 类属性
 
@@ -1112,6 +1171,8 @@ final Node<K,V>[] resize() {
 4. 建立公共溢出区
 
 ## `CurrentHashMap`
+
+[CurrentHashMap详解](https://www.cnblogs.com/zerotomax/p/8687425.html)
 
 ### 为什么使用 `CurrentHashMap`
 

@@ -4,9 +4,10 @@
 
 ### Class 文件结构
 
-[详情](https://juejin.im/post/5a112f9551882535cd4a6c38)
+[详情](https://www.jianshu.com/p/ae3f860499aa)
 
 ### 运行时数据区
+[方法区详解](https://blog.csdn.net/qingtiantianqing/article/details/51405517)
 
 [详情](https://crowhawk.github.io/2017/08/09/jvm_1/)
 

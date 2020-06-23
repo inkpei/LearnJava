@@ -6,5 +6,22 @@ package com.pei.proxy;
  * @Description: TODO
  * @Data: 2020/4/12
  */
-public class Pei {
+public class Pei implements Person {
+    @Override
+    public void eat() {
+        System.out.println("eat");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("sleep");
+    }
+
+    private void play(){
+        System.out.println("play");
+    }
+
+    public void doPlay(){
+        play();
+    }
 }

@@ -7,4 +7,6 @@ package com.pei.proxy;
  * @Data: 2020/4/12
  */
 public interface Person {
+    void eat();
+    void sleep();
 }

@@ -1,5 +1,15 @@
 # 文章
 
+[缓存双写](https://www.cnblogs.com/rjzheng/p/9041659.html)
+
+[HyperLogLog 算法](https://juejin.im/post/5c7900bf518825407c7eafd0)
+
+[布隆过滤器](https://juejin.im/post/5bc7446e5188255c791b3360)
+
+[quickList](https://juejin.im/post/579222427db2a20054d8f884)
+
+[stream 总结](https://juejin.im/post/5b10ad586fb9a01e4072a520)
+
 [redis 总结——重构版](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247484858&idx=1&sn=8e222ea6115e0b69cac91af14d2caf36&chksm=cea24a71f9d5c367148dccec3d5ddecf5ecd8ea096b5c5ec32f22080e66ac3c343e99151c9e0&token=1082669959&lang=zh_CN&scene=21#wechat_redirect)
 
 [Redis-面试总结](https://liuyehcf.github.io/2017/08/03/Redis-%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/)
@@ -12,4 +22,6 @@
 
 [面试之 Redis 基础、高级特性与性能调优](https://learnku.com/articles/25070)
 
-[面试总结](https://www.jianshu.com/p/a61f012e84d5) 
+[面试总结](https://www.jianshu.com/p/a61f012e84d5)
+ 
+[妈妈再也不担心我面试被Redis问得脸都绿了](https://juejin.im/post/5e7b43945188255dda23d1e3)
