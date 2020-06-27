@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class FastSort implements Sort {
 
 
-        private void fastSort(int[] arr, int low, int high) {
+    private void fastSort(int[] arr, int low, int high) {
         if (low > high) return;
         int flag = arr[low];
         int i = low + 1;
