@@ -8,15 +8,15 @@ import java.util.Arrays;
  * @Description: 归并排序
  * @Data: 2020/6/22
  */
-public class MergeSort implements Sort{
+public class MergeSort implements Sort {
 
     public static void merge(int[] arr, int low, int mid, int high) {
         int[] temp = new int[high - low + 1];
         int i = low;
-        int j = mid+1;
+        int j = mid + 1;
         int k = 0;
 
-        while (i <= mid && j <=high){
+        while (i <= mid && j <= high) {
             if (arr[i] < arr[j]) {
                 temp[k++] = arr[i++];
             } else {
@@ -35,7 +35,6 @@ public class MergeSort implements Sort{
             mergeSort(arr, mid + 1, high);
             merge(arr, low, mid, high);
         }
-
     }
 
     public static void main(String[] args) {
