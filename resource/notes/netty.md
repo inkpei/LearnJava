@@ -45,3 +45,5 @@
 
 ### [Netty 线程模型](https://juejin.im/post/5dac6ef75188252bc1657ead)
 ### [Netty NioEventLoop & NioEventLoopGroup](https://segmentfault.com/a/1190000007403873)
+
+## [Netty 中常见的坑](https://ezlippi.com/blog/2020/02/netty-best-practice.html)

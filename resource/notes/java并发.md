@@ -88,6 +88,8 @@ public static void main(String[] args) throws Exception {
 ```
 
 5. 线程池
+
+[线程池使用详解](https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html)
 ```java
 public static void main(String[] args) throws Exception {
 
