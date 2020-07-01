@@ -30,7 +30,7 @@ BASE模型的软状态是实现BASE理论的方法，基本可用和最终一致
 
 ### 2PC
 
-![](.ZooKeeper_images/5efac5b8.png)
+![](img/5efac5b8.png)
 
 1. 准备阶段：协调者向参与者发起指令，参与者评估自己的状态，如果参与者评估指令可以完成，参与者会写redo或者undo日志（这也是前面提起的Write-Ahead Log的一种），然后锁定资源，执行操作，但是并不提交
 
@@ -75,7 +75,7 @@ BASE模型的软状态是实现BASE理论的方法，基本可用和最终一致
 ## 系统模型
 ### 节点状态
 
-![](.ZooKeeper_images/57ad178c.png)
+![](img/57ad178c.png)
 
 ### [watcher机制](https://www.jianshu.com/p/4c071e963f18)
 

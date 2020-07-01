@@ -110,7 +110,7 @@ public static void main(String[] args) throws Exception {
 
 ### 线程状态
 
-![](.java并发_images/线程状态图.png)
+![](img/线程状态图.png)
 
 Java语言中定义了5种线程状态, 在任意一个时间点, 一个线程只能有且只有其中一种状态, 这5种状态是：
 
@@ -166,11 +166,11 @@ Thread.sleep()方法
 
 executor 框架结构主要由 任务(`Runnable/Callable`), 任务的执行(`Executor`), 异步结果的获取(`Fature`) 三大部分组成
 
-![](.java并发_images/线程池继承图.png)
+![](img/线程池继承图.png)
 
-![](.java并发_images/Executor框架.png)
+![](img/Executor框架.png)
 
-![](.java并发_images/线程池原理.png)
+![](img/线程池原理.png)
 
 ### ThreadPoolExecutor类分析
 
@@ -332,7 +332,7 @@ public class SynchronizedDemo {
 
 查看反编译结果
 
-![](.java并发_images/同步代码块反编译.png)
+![](img/同步代码块反编译.png)
 
 1. monitorenter：每个对象都是一个监视器锁（monitor）。当monitor被占用时就会处于锁定状态，线程执行monitorenter指令时尝试获取monitor的所有权，过程如下：
 
@@ -352,7 +352,7 @@ public class SynchronizedMethod {
 }
 ```
 
-![](.java并发_images/同步方法反编译.png)
+![](img/同步方法反编译.png)
 
 当方法调用时，调用指令将会检查方法的 ACC_SYNCHRONIZED 访问标志是否被设置，如果设置了，执行线程将先获取monitor，获取成功之后才能执行方法体，方法执行完后再释放monitor。在方法执行期间，其他任何线程都无法再获得同一个monitor对象。
 
@@ -379,7 +379,7 @@ public class SynchronizedMethod {
 
 ### MarkWord
 
-![](.java并发_images/MarkWord.png)
+![](img/MarkWord.png)
 
 ###  CAS(Compare And Swap)
 

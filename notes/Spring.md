@@ -54,7 +54,7 @@
 在实际的项目中，我们不可避免的要用到Spring容器本身的功能资源，这时候Bean必须要意识到Spring容器的存在，才能调用Spring所提供的资源，这就是所谓的Spring Aware。其实Spring Aware本来就是Spring设计用来框架内部使用的，若使用了Spring Aware，你的Bean将会和Spring框架耦合。
 
 ## [Bean的生命周期](https://yemengying.com/2016/07/14/spring-bean-life-cycle/)
-![](.Spring_images/bbf74a00.png)
+![](img/bbf74a00.png)
 
 ## [Bean的作用域](https://juejin.im/post/5dad1455f265da5b6006fa6a)
 
@@ -90,7 +90,7 @@ Spring根本就没有对bean的多线程安全问题做出任何保证与措施�
 # [Spring MVC](https://juejin.im/post/5d88267c5188253f0f61dc5b)
 
 ### [Spring MVC 流程](https://juejin.im/post/5c0f6a60518825080825aae7)
-![](.Spring_images/c142a983.png)
+![](img/c142a983.png)
 
 ### [Spring MVC常用注解](https://my.oschina.net/u/3739863/blog/1815500)
 
