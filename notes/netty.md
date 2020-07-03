@@ -36,6 +36,7 @@
 ![](img/1f977fdf.png)
 
 ### [Netty 心跳机制](https://blog.csdn.net/a953713428/article/details/69378412)
+[rpc 心跳机制设计](https://www.cnkirito.moe/heartbeat-design/)
 
 ### [Netty 内存管理](https://segmentfault.com/a/1190000021444859)
 

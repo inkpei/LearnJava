@@ -278,9 +278,25 @@ public class Singleton{
 
 //单例模式
 
-public enum Singleton{
-    INSTANCE;
+class  SingleObject{
+    enum SingleEnum{
+        Instance;
+        private final SingleObject singleObject;
+
+        SingleEnum() {
+            this.singleObject = new SingleObject();
+        }
+
+        public SingleObject getSingleObject(){
+            return singleObject;
+        }
+    }
+
+    public static SingleObject getInstance() {
+        return SingleEnum.Instance.getSingleObject();
+    }
 }
+
 // 容器
 
 public class SingletonManager { 
