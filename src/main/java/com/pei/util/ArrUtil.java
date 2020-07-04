@@ -1,8 +1,5 @@
 package com.pei.util;
 
-import com.sun.deploy.security.WSeedGenerator;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;

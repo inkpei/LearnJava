@@ -4,11 +4,6 @@
 
 [Spring 相关知识点](https://blog.csdn.net/fuzhongmin05/article/details/106083203)
 
-[Spring 事务传播机制](https://juejin.im/post/5ae9639af265da0b926564e7)
-
-[Spring 事务原理](https://zhuanlan.zhihu.com/p/54067384)
-
-[Spring 事务传播机制](https://github.com/love-somnus/Spring/wiki/Spring%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E7%89%B9%E6%80%A7)**
 
 [Spring 注解大全](http://www.jiangxinlingdu.com/spring/2019/02/11/annotation.html)
 
@@ -20,6 +15,7 @@
 
 - [Bean的加载过程](https://juejin.im/post/5b040cf66fb9a07ab7748c8b)
 - [一文搞懂Bean的加载过程](https://juejin.im/post/5ccff60d6fb9a032447f0c8e)
+- [Spring 循环依赖](https://zhuanlan.zhihu.com/p/62382615)
 
 加载过程： 通过 `ResourceLoader` 和其子类 `DefaultResourceLoader` 完成资源文件位置定位，实现从类路径，文件系统，url等方式定位功能，完成定位后得到 `Resource` 对象，再交给 `BeanDefinitionReader` ，它再委托给 `BeanDefinitionParserDelegate` 完成 bean 的解析并得到 `BeanDefinition` 对象，然后通过 `registerBeanDefinition` 方法进行注册，IOC容器内ibu维护了一个HashMap来保存该 `BeanDefinition` 对象，Spring中的BeanDefinition其实就是我们用的JavaBean。
 
@@ -101,6 +97,11 @@ Spring根本就没有对bean的多线程安全问题做出任何保证与措施�
 ### [Spring MVC 异常处理](http://imushan.com/2017/11/27/java/spring/Spring%E7%AC%94%E8%AE%B0-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/)
 
 # [Spring 事务](https://juejin.im/post/5ebe682c5188256d8a22940f)
+
+![](img/257172a0.png)
+- [Spring 事务传播机制](https://github.com/love-somnus/Spring/wiki/Spring%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E7%89%B9%E6%80%A7)
+
+
 
 ### [@Transactional注解的失效场景](https://juejin.im/post/5e72e97c6fb9a07cb346083f)
 
