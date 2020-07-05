@@ -6,6 +6,10 @@
 
 [数据库两大神器【索引和锁】](https://juejin.im/post/5b55b842f265da0f9e589e79)
 
+[意向锁](https://juejin.im/post/5b85124f5188253010326360)
+
+[数据库设计三范式](https://www.jianshu.com/p/3e97c2a1687b)
+
 [数据库事务、隔离级别和锁](https://www.jianshu.com/p/cb97f76a92fd)
 
 [mysql 如何保证原子操作](https://segmentfault.com/a/1190000021964629?utm_source=tag-newest)
@@ -35,3 +39,5 @@
 [视图](https://www.cnblogs.com/geaozhang/p/6792369.html)
 
 [explain](https://juejin.im/post/5ee894a05188253683551567?utm_source=gold_browser_extension)
+
+[数据库调优](https://juejin.im/post/5ee193a1e51d45783d0eb8b2)
