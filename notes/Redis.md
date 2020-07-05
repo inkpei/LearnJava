@@ -1,6 +1,14 @@
 # 文章
 
-[lua脚本原理](https://juejin.im/post/5bce7e9fe51d457a772bcfc6)
+## [lua脚本原理](https://juejin.im/post/5bce7e9fe51d457a772bcfc6)
+- [教程](https://redisbook.readthedocs.io/en/latest/feature/scripting.html)
+
+指令
+- eval
+- script load
+- evalsha
+
+钩子函数
 
 [redis 分布式锁](https://juejin.im/post/58b3a93c1b69e60058b49767)
 
@@ -11,6 +19,8 @@
 [布隆过滤器](https://juejin.im/post/5bc7446e5188255c791b3360)
 
 [quickList](https://juejin.im/post/579222427db2a20054d8f884)
+
+[ziplist](https://juejin.im/post/577ce6efa3413100619a2422)
 
 [intset](https://juejin.im/post/58350d1a67f3560065e74bde)
 

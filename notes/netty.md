@@ -39,10 +39,9 @@
 [rpc 心跳机制设计](https://www.cnkirito.moe/heartbeat-design/)
 
 ### [Netty 内存管理](https://segmentfault.com/a/1190000021444859)
-
-- [PoolSubPage](https://gsmtoday.github.io/2017/08/27/poolsubpage/)
-- [PoolArena](https://gsmtoday.github.io/2017/09/02/poolarena/)
-- [PoolChunk](https://gsmtoday.github.io/2017/08/27/poolchunk/)
+- https://developer.51cto.com/art/202007/620083.htm
+- https://www.jianshu.com/p/7882689e7fe5
+- https://binglau7.github.io/2018/12/10/Netty%E4%B8%AD%E7%9A%84ByteBuf-Pooled%E4%B8%8E%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/
 
 ### [Netty 线程模型](https://juejin.im/post/5dac6ef75188252bc1657ead)
 ### [Netty NioEventLoop & NioEventLoopGroup](https://segmentfault.com/a/1190000007403873)
