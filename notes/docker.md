@@ -112,3 +112,8 @@ https://www.jianshu.com/p/f7f7ab47cc3a
 docker exec -it 3017 redis-cli
 ```
 
+## mysql
+
+```bash
+docker run --name first-mysql -p 3306:3306 -e MYSQL\_ROOT\_PASSWORD=123456 -d mysql
+```

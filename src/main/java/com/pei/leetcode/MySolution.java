@@ -1,9 +1,6 @@
 package com.pei.leetcode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @Project: LearnJdkCode
@@ -11,47 +8,51 @@ import java.util.List;
  * @Description:
  * @Data: 2020/6/22
  */
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int x) {
+        val = x;
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int x) {
+        val = x;
+    }
+}
+
 public class MySolution {
 
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        int[] arr = {1,1, 2, 3};
-        System.out.println(solution.permuteUnique(arr));
-    }
+        ArrayList<byte[]> list = new ArrayList<>();
 
+        while (true) {
+            list.add(new byte[1024 * 1024]);
+        }
+    }
 }
+
 
 class Solution {
-    public List<List<Integer>> result = new LinkedList<>();
-    public List<List<Integer>> permuteUnique(int[] nums) {
-        if(nums.length == 0){
-            return result;
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) return mid;
+            else if (nums[mid] < target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
         }
-        //首先给数组排序
-        Arrays.sort(nums);
-        findUnique(nums,new boolean[nums.length],new LinkedList<Integer>());
-        return result;
-    }
-    public void findUnique(int[] nums, boolean[] visited,LinkedList<Integer> trace){
-        //结束条件
-        if(trace.size() == nums.length){
-            if (!result.contains(trace))
-            result.add(new LinkedList(trace));
-            return ;
-        }
-        //选择列表
-        for(int i = 0; i<nums.length; i++){
-            //其次，我们已经选择过的不需要再放进去了
-            if(visited[i]) continue;
-            //接下来，如果当前节点与他的前一个节点一样，并其他的前一个节点已经被遍历过了，那我们也就不需要了。
-            //做出选择
-            trace.add(nums[i]);
-            visited[i] = true;
-            findUnique(nums,visited,trace);
-            //撤销选择
-            trace.removeLast();
-            visited[i] = false;
-        }
+        return -1;
     }
 }
-

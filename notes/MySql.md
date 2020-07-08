@@ -4,6 +4,8 @@
 
 # 文章
 
+[mysql 语句优化](https://juejin.im/post/5aa7703c6fb9a028c8128739)
+
 [数据库两大神器【索引和锁】](https://juejin.im/post/5b55b842f265da0f9e589e79)
 
 [意向锁](https://juejin.im/post/5b85124f5188253010326360)
@@ -41,3 +43,5 @@
 [explain](https://juejin.im/post/5ee894a05188253683551567?utm_source=gold_browser_extension)
 
 [数据库调优](https://juejin.im/post/5ee193a1e51d45783d0eb8b2)
+
+[mysql 事件](https://www.jianshu.com/p/8faa7dadd073)
