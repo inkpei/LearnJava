@@ -41,3 +41,7 @@
 [面试总结](https://www.jianshu.com/p/a61f012e84d5)
  
 [妈妈再也不担心我面试被Redis问得脸都绿了](https://juejin.im/post/5e7b43945188255dda23d1e3)
+
+[redis 内存碎片率](https://blog.csdn.net/my_tiantian/article/details/84333716)
+
+[redis 内存管理](https://www.cnblogs.com/kismetv/p/8654978.html#t32)
