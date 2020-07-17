@@ -47,3 +47,8 @@
 ### [Netty NioEventLoop & NioEventLoopGroup](https://segmentfault.com/a/1190000007403873)
 
 ## [Netty 中常见的坑](https://ezlippi.com/blog/2020/02/netty-best-practice.html)
+
+
+## [Netty 相关知识点](https://blog.csdn.net/baiye_xing/article/details/76735113)
+
+## [future 与 promise](https://www.jianshu.com/p/a06da3256f0c)

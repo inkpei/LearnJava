@@ -1,7 +1,5 @@
 package com.pei.leetcode;
 
-import java.util.Arrays;
-
 /**
  * @Project: LearnJdkCode
  * @Author: Pei
@@ -11,27 +9,20 @@ import java.util.Arrays;
 
 public
 class Solution {
-    public int[] gardenNoAdj(int N, int[][] paths) {
-        int[] ans = new int[N];
-        if (paths.length < 1) {
-            Arrays.fill(ans, 1);
-            return ans;
-        }
-        int[][] arr = new int[N][N];
-        for (int[] path : paths) {
-            arr[path[0] - 1][path[1] - 1] = -1;
-            arr[path[1] - 1][path[0] - 1] = -1;
+    public int rob(int[] nums) {
+        if (nums.length < 1) return 0;
+        if (nums.length == 1) return nums[0];
+        if (nums.length == 2) return Math.max(nums[0], nums[1]);
+        int pre = nums[0];
+        int now = Math.max(nums[0], nums[1]);
+
+        for (int i = 2; i < nums.length; i++) {
+            int tmp = now;
+            now = Math.max(now, pre + nums[i]);
+            pre = tmp;
         }
 
+        return now;
 
-        for (int i = 0; i < N; i++) {
-            int count = 1;
-            for (int j = 0; j < i; j++) {
-                if (arr[i][j] == -1) count++;
-
-            }
-            ans[i] = count;
-        }
-        return ans;
     }
 }
