@@ -36,7 +36,6 @@ public class Parse {
         for (int i = 0; i < split.length; i++) {
             ans[i] = parseIntArr(split[i]);
         }
-        print(ans);
         return ans;
     }
 
