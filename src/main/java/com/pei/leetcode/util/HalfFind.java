@@ -23,7 +23,7 @@ public class HalfFind {
         return find(arr, target, 0, arr.length - 1);
     }
 
-    public static int findLR(int[] arr, int target, int left, int right) {
+    public static int findUpper(int[] arr, int target, int left, int right) {
         if (arr.length == 0 || left > right) return -1;
         while (left < right) {
             int mid = left + (right - left) / 2;
@@ -38,12 +38,12 @@ public class HalfFind {
         return left;
     }
 
-    public static int findLR(int[] arr, int target) {
-        return findLR(arr, target, 0, arr.length);
+    public static int findUpper(int[] arr, int target) {
+        return findUpper(arr, target, 0, arr.length);
     }
 
 
-    public static int findRR(int[] arr, int target, int left, int right) {
+    public static int findDowner(int[] arr, int target, int left, int right) {
         if (arr.length == 0 || left > right) return -1;
         while (left < right) {
             int mid = left + (right - left) / 2;
@@ -58,18 +58,14 @@ public class HalfFind {
         return left - 1;
     }
 
-    public static int findRR(int[] arr, int target) {
-        return findRR(arr, target, 0, arr.length);
+    public static int findDowner(int[] arr, int target) {
+        return findDowner(arr, target, 0, arr.length);
     }
 
 
     public static void main(String[] args) {
-        int[] ints = {1, 1, 2, 3, 5, 7, 7, 7, 7, 7, 7, 9};
-
-        System.out.println(findLR(ints, 15));
-        System.out.println(findRR(ints, 15));
-        System.out.println(findLR(ints, -5));
-        System.out.println(findRR(ints, -5));
-
+        int[] arr = {1, 2, 6, 6, 9, 11};
+        System.out.println(arr[findUpper(arr, 10)]);
+        System.out.println(arr[findDowner(arr, 10)]);
     }
 }

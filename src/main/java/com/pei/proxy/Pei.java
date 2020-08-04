@@ -17,11 +17,16 @@ public class Pei implements Person {
         System.out.println("sleep");
     }
 
-    private void play(){
+    @Override
+    public int say(int x) {
+        return x;
+    }
+
+    private void play() {
         System.out.println("play");
     }
 
-    public void doPlay(){
+    public void doPlay() {
         play();
     }
 }

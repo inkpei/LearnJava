@@ -20,7 +20,7 @@ public class ArrUtil {
     }
     public static void print(int[][] arrs) {
         for (int[] arr: arrs) {
-            System.out.println("// " + Arrays.toString(arr));
+            System.out.println(Arrays.toString(arr));
         }
     }
 

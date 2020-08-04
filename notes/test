@@ -23,12 +23,14 @@
 FADB: A Fine-Grained Access Control Scheme for VANET Data Based on Blockchain (SCI 二区)
 
 
-
+netty-rpc
 学习 rpc 相关知识时, 通过 Netty 和 ZooKeeper 实现的一个简易的 RPC 框架, 最大QPS约为 8000/s
 支持服务注册与发现
 支持心跳检测
 支持负载均衡
 支持 Sync Future CallBack 三种方式调用服务
+
+
 spring-boot-redis-lock
 一个基于redis的分布式锁组件,通过注解的方式使项目能够简单快捷实现分布式锁功能
 支持可重入锁, 公平锁, 读写锁

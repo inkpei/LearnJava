@@ -24,8 +24,10 @@ public class PeiInvocationHandle implements InvocationHandler {
     }
 
     public static void main(String[] args) {
-        Person pei =(Person) Proxy.newProxyInstance(Pei.class.getClassLoader(), Pei.class.getInterfaces(), new PeiInvocationHandle(new Pei()));
+        Person pei = (Person) Proxy.newProxyInstance(Pei.class.getClassLoader(), Pei.class.getInterfaces(), new PeiInvocationHandle(new Pei()));
         pei.eat();
         pei.sleep();
+        System.out.println(pei.say(100));
+
     }
 }

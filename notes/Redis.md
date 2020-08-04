@@ -20,9 +20,9 @@
 
 [quickList](https://juejin.im/post/579222427db2a20054d8f884)
 
-[ziplist](https://juejin.im/post/577ce6efa3413100619a2422)
+[ZipList](https://juejin.im/post/577ce6efa3413100619a2422)
 
-[intset](https://juejin.im/post/58350d1a67f3560065e74bde)
+[IntSet](https://juejinIm/post/58350d1A67F3560065E74Bde)
 
 [stream 总结](https://juejin.im/post/5b10ad586fb9a01e4072a520)
 

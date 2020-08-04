@@ -1,8 +1,19 @@
 package com.pei.leetcode.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Parse {
+
+    public static ArrayList<Integer> ArrToList(int[] arr) {
+        return Arrays.stream(arr).boxed().collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public static List<List<Integer>> ArrToList2D(int[][] arr) {
+        return Arrays.stream(arr).map(Parse::ArrToList).collect(Collectors.toList());
+    }
 
     public static String[] parseStrArr(String s) {
         s = s.replaceAll(" *", "");
@@ -47,6 +58,14 @@ public class Parse {
         for (int[] inits : arr) {
             System.out.println(Arrays.toString(inits));
         }
+        System.out.println();
+    }
+
+    public static void print(double[][] arr) {
+        for (double[] inits : arr) {
+            System.out.println(Arrays.toString(inits));
+        }
+        System.out.println();
     }
 
     public static void print(String[] arr) {
@@ -59,7 +78,29 @@ public class Parse {
         }
     }
 
+    public static void print(char[] arr) {
+        System.out.println(Arrays.toString(arr));
+    }
+
+    public static void print(char[][] arr) {
+        for (char[] ins : arr) {
+            System.out.println(Arrays.toString(ins));
+        }
+    }
+
+    public static char[] ParseCharArr(String s) {
+
+        s = s.replaceAll("\"", "");
+        int[] ints = parseIntArr(s);
+        char[] res = new char[ints.length];
+        for (int i = 0; i < ints.length; i++) {
+            res[i] = String.valueOf(ints[i]).charAt(0);
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         System.out.println(Arrays.deepToString(parseStrArr2D("[ [\"a\", \"c\"], [\"b\", \"a\"], [\"a\", \"e\"], [\"a\", \"a\"], [\"x\", \"x\"] ]")));
     }
+
 }

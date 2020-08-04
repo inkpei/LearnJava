@@ -8,5 +8,8 @@ package com.pei.proxy;
  */
 public interface Person {
     void eat();
+
     void sleep();
+
+    int say(int x);
 }
