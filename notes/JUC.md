@@ -1,6 +1,7 @@
 # JUC 并发包原理详解
 
-[总览](http://www.iocoder.cn/JUC/good-collection/?vip)
+- [JUC包总结](https://donaldhan.github.io/java/2018/02/01/JUC%E5%8C%85%E6%80%BB%E7%BB%93.html#callable%E4%B8%8Efuture,futuretask)
+
 
 ## 锁
 

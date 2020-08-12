@@ -57,3 +57,18 @@
 
 - [mysql 事件](https://www.jianshu.com/p/8faa7dadd073)
 
+## [极客时间](https://time.geekbang.org/column/intro/100020801) [详情](https://github.com/git-zjx/git-zjx.github.io)
+### 
+
+- [一条SQL更新语句是如何执行的](https://blog.csdn.net/weixin_44240370/article/details/97529970)
+
+- [深入浅出索引(下)](https://blog.csdn.net/weixin_44240370/article/details/97529970)
+
+- [全局锁与表锁](https://blog.csdn.net/zhoutaochun/article/details/100109267)
+
+- [怎么减少行锁对性能的影响？](https://www.cnblogs.com/a-phper/p/10313876.html)
+
+- [事务到底是隔离还是不隔离](https://www.cnblogs.com/a-phper/p/10313878.html)
+- [普通索引和唯一索引，应该怎么选择？](https://www.cnblogs.com/a-phper/p/10313884.html)
+- [MySQL为什么有时候会选错索引？](https://www.cnblogs.com/a-phper/p/10313888.html)
+- [怎么给字符串字段加索引？](https://www.cnblogs.com/a-phper/p/10313891.html)

@@ -9,37 +9,28 @@ public class MoveWindow {
     public String minWindow(String s, String t) {
         // 存储约束条件
         HashMap<Character, Integer> need = new HashMap<>();
-
         // 存储当前窗口状态
         HashMap<Character, Integer> window = new HashMap<>();
-
         for (char c : t.toCharArray()) {
             need.put(c, need.getOrDefault(c, 0) + 1);
         }
-
         int left = 0;
         int right = 0;
         int valid = 0;
-
         // 标记结果
         int start = 0;
         int len = Integer.MAX_VALUE;
-
-
         while (right < s.length()) {
             char c = s.charAt(right);
             // 窗口右移
             right++;
-
             // 更新窗口状态
             if (need.containsKey(c)) {
-
                 window.put(c, window.getOrDefault(c, 0) + 1);
                 if (window.get(c).equals(need.get(c))) {
                     valid++;
                 }
             }
-
             // 已经满足条件, 尝试缩小窗口
             while (valid == need.size()) {
 
