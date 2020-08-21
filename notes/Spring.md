@@ -105,3 +105,5 @@ Spring根本就没有对bean的多线程安全问题做出任何保证与措施�
 ### [@Transactional注解的失效场景](https://juejin.im/post/5e72e97c6fb9a07cb346083f)
 
 # [Spring EL](http://itmyhome.com/spring/expressions.html)
+
+- [Async注解](https://developer.aliyun.com/article/768513)

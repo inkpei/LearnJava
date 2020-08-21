@@ -1,42 +1,42 @@
 package com.pei.leetcode;
 
 
-import java.util.HashSet;
+import java.util.LinkedList;
 
 public
 class Solution {
-    HashSet<Integer>[] map;
-    int n;
-    int count = 0;
-
-    public int numWays(int n, int[][] relation, int k) {
-        this.n = n;
-        HashSet<Integer>[] hashSets = new HashSet[n];
-        for (int[] ints : relation) {
-            HashSet<Integer> tmp = hashSets[ints[0]];
-            if (tmp == null) {
-                tmp = new HashSet<>();
-                hashSets[ints[0]] = tmp;
-            }
-            tmp.add(ints[1]);
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        LinkedList<int[]> stack = new LinkedList<>();
+        put(stack, newInterval);
+        for (int[] interval : intervals) {
+            put(stack, interval);
         }
-        map = hashSets;
-        trace(0, k);
-        return count;
+        int[][] ans = new int[stack.size()][2];
+        for (int i = 0; i < stack.size(); i++) {
+            ans[i] = stack.get(stack.size() - 1 - i);
+        }
+        return ans;
     }
 
-    void trace(int from, int k) {
-        if (k == 0) {
-            if (from == n - 1) {
-                count++;
-            }
-            return;
-        }
+    void put(LinkedList<int[]> stack, int[] cur) {
 
-        HashSet<Integer> set = map[from];
-        if (set == null) return;
-        for (Integer integer : set) {
-            trace(integer, k - 1);
+        if (stack.isEmpty()) {
+            stack.push(cur);
+        } else {
+            int[] peek = stack.peek();
+            if (cur[0] > peek[1]) {
+                stack.push(cur);
+            } else if (cur[1] < peek[0]) {
+                int[] pop = stack.pop();
+                put(stack, cur);
+                stack.push(pop);
+            } else {
+                int[] pop = stack.pop();
+                int[] tmp = {
+                        Math.min(pop[0], cur[0]), Math.max(pop[1], cur[1])
+                };
+                put(stack, tmp);
+            }
         }
     }
 }

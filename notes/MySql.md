@@ -3,6 +3,8 @@
 * https://www.cnblogs.com/geaozhang/category/1326927.html
 
 # 文章
+- [死锁处理方式](https://www.aneasystone.com/archives/2018/04/solving-dead-locks-four.html)
+
 - [Innodb 幻读问题](http://blog.chxj.name/locks-in-repeatable-read-isolation-level-of-mysql-innodb/)
 
 - [Innodb 三大特性](https://cheng-dp.github.io/2019/05/05/innodb-three-feature/)
