@@ -1,4 +1,4 @@
-package com.pei.proxy;
+package com.pei.demo.proxy;
 
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;

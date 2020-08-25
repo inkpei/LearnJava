@@ -1,4 +1,4 @@
-package com.pei.proxy;
+package com.pei.demo.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -1,4 +1,4 @@
-package com.pei.sort;
+package com.pei.demo.sort;
 
 import java.util.ArrayList;
 

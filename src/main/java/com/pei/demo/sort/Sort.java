@@ -1,4 +1,4 @@
-package com.pei.sort;
+package com.pei.demo.sort;
 
 /**
  * @Project: LearnJdkCode

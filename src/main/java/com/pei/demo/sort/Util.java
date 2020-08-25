@@ -1,7 +1,6 @@
-package com.pei.sort;
+package com.pei.demo.sort;
 
 import java.util.Random;
-import java.util.stream.IntStream;
 
 /**
  * @Project: LearnJdkCode

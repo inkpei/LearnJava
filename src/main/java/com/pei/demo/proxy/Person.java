@@ -1,4 +1,4 @@
-package com.pei.proxy;
+package com.pei.demo.proxy;
 
 /**
  * @Project: LearnJdkCode
