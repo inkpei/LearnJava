@@ -18,13 +18,14 @@ public class ArrUtil {
     public static void print(int[] arr) {
         System.out.println("// " + Arrays.toString(arr));
     }
+
     public static void print(int[][] arrs) {
-        for (int[] arr: arrs) {
+        for (int[] arr : arrs) {
             System.out.println(Arrays.toString(arr));
         }
     }
 
-    public static int[] getArr(String s,String c) {
+    public static int[] getArr(String s, String c) {
         String[] s1 = s.split(c);
         int[] res = new int[s1.length];
         for (int i = 0; i < s1.length; i++) {
@@ -39,9 +40,7 @@ public class ArrUtil {
     }
 
 
-
-
-        public static int[] getArr(int n, int bound, boolean isDup, boolean isSort) {
+    public static int[] getArr(int n, int bound, boolean isDup, boolean isSort) {
         int[] res = new int[n];
         Random random = new Random(seed);
         if (isDup) {
@@ -89,20 +88,18 @@ public class ArrUtil {
 
     public static int[][] getArrs(int m, int n) {
 
-        return getArrs(m,n,10,true,false);
+        return getArrs(m, n, 10, true, false);
     }
 
     public static int[][] getArrs(int m, int n, int bound) {
 
-        return getArrs(m,n,bound,true,false);
+        return getArrs(m, n, bound, true, false);
 
     }
 
     public static int[][] getArrs(int m, int n, boolean isDup) {
-        return getArrs(m,n,10,isDup,false);
+        return getArrs(m, n, 10, isDup, false);
     }
-
-
 
 
     public static void main(String[] args) {

@@ -1,14 +1,19 @@
 package com.pei.leetcode;
 
 
+import java.util.HashSet;
+
 public
 class Solution {
-    public boolean repeatedSubstringPattern(String s) {
-        for (int i = 1; i < s.length(); i++) {
-            if (s.charAt(i) == s.charAt(0)) {
-
+    public String reduce(String s) {
+        HashSet<Character> set = new HashSet<>();
+        StringBuilder ans = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (!set.contains(c)) {
+                ans.append(c);
+                set.add(c);
             }
         }
-        return true;
+        return ans.toString();
     }
 }

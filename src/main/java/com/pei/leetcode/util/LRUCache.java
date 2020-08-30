@@ -1,4 +1,4 @@
-package com.pei.demo;
+package com.pei.leetcode.util;
 
 import java.util.HashMap;
 

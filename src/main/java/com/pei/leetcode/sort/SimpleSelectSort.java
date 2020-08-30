@@ -1,4 +1,4 @@
-package com.pei.demo.sort;
+package com.pei.leetcode.sort;
 
 import java.util.Arrays;
 
@@ -11,9 +11,9 @@ import java.util.Arrays;
 public class SimpleSelectSort implements Sort {
     @Override
     public void sort(int[] arr) {
+
         for (int i = 0; i < arr.length; i++) {
             int min = i; // 将当前下标定义为最小值下标
-
             for (int j = i + 1; j < arr.length; j++) {
                 if (arr[min] > arr[j]) { // 如果有小于当前最小值的关键字, 则将此关键字的下标赋值给min
                     min = j;
@@ -23,6 +23,7 @@ public class SimpleSelectSort implements Sort {
                 Util.swap(arr, i, min);
             }
         }
+
     }
 
     public static void main(String[] args) {
