@@ -1,39 +1,33 @@
 package com.pei.leetcode;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.lang.reflect.Field;
 
 public
 class Solution {
-    public List<List<Integer>> combinationSum3(int k, int n) {
-        K = k;
-        N = n;
-        trace(new HashSet<>(), 0);
-        return new ArrayList<>(ans);
-    }
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, InterruptedException {
 
-    int K;
-    int N;
-    HashSet<List<Integer>> ans = new HashSet<>();
-
-    void trace(HashSet<Integer> set, int sum) {
-        if (set.size() == K) {
-            if (sum == N) {
-                ArrayList<Integer> list = new ArrayList<>(set);
-                Collections.sort(list);
-                ans.add(list);
-            }
-            return;
-        }
-
-        for (int i = 1; i < 10; i++) {
-            if (!set.contains(i)) {
-                set.add(i);
-                trace(set, sum + i);
-                set.remove(i);
+        ThreadLocal<Integer> local = new ThreadLocal<>();
+        local.set(100);
+//        local = null;
+        System.gc();
+        Thread t = Thread.currentThread();
+        Class<? extends Thread> clz = t.getClass();
+        Field field = clz.getDeclaredField("threadLocals");
+        field.setAccessible(true);
+        Object ThreadLocalMap = field.get(t);
+        Class<?> tlmClass = ThreadLocalMap.getClass();
+        Field tableField = tlmClass.getDeclaredField("table");
+        tableField.setAccessible(true);
+        Object[] arr = (Object[]) tableField.get(ThreadLocalMap);
+        for (Object o : arr) {
+            if (o != null) {
+                Class<?> entryClass = o.getClass();
+                Field valueField = entryClass.getDeclaredField("value");
+                Field referenceField = entryClass.getSuperclass().getSuperclass().getDeclaredField("referent");
+                valueField.setAccessible(true);
+                referenceField.setAccessible(true);
+                System.out.printf("弱引用key: %s ,值: %s\t%n", referenceField.get(o), valueField.get(o));
             }
         }
     }

@@ -1,45 +1,69 @@
 package com.pei.exam;
 
 
-import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Main {
-
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String s = scanner.nextLine();
-        HashMap<Character, Integer> map = new HashMap<>();
-        map.put('a', 0);
-        map.put('b', 0);
-        map.put('c', 0);
-        map.put('x', 0);
-        map.put('y', 0);
-        map.put('z', 0);
-        for (int i = 0; i < s.length(); i++) {
-            if (map.containsKey(s.charAt(i))) {
-                map.put(s.charAt(i), map.get(s.charAt(i)) + 1);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        char[] ops = {'+', '-', '*', '/'};
+        StringBuilder builder = new StringBuilder();
+        builder.append(N);
+        for (int i = 0; i < 4; i++) {
+            builder.append(ops[i]);
+            builder.append(N);
+            for (int j = 0; j < 4; j++) {
+                builder.append(ops[j]);
+                builder.append(N);
+                for (int k = 0; k < 4; k++) {
+                    builder.append(ops[k]);
+                    builder.append(N);
+                    if (M == calculate(builder.toString())) {
+                        System.out.println(1);
+                        return;
+                    }
+                }
             }
-        }
-        int left = 0;
-        int right = s.length() - 1;
-        int max = s.length();
-        if (!isDouble(map)) {
-            while (left <= right) {
 
-            }
         }
-
+        System.out.println(0);
     }
 
-    static boolean isDouble(HashMap<Character, Integer> map) {
-        for (Integer value : map.values()) {
-            if (value % 2 != 0) return false;
+    public static int calculate(String s) {
+        Stack<Integer> numStack = new Stack<>();
+
+        char lastOp = '+';
+        char[] arr = s.toCharArray();
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == ' ') continue;
+
+            if (Character.isDigit(arr[i])) {
+                int tempNum = arr[i] - '0';
+                while (++i < arr.length && Character.isDigit(arr[i])) {
+                    tempNum = tempNum * 10 + (arr[i] - '0');
+                }
+                i--;
+
+                if (lastOp == '+') numStack.push(tempNum);
+                else if (lastOp == '-') numStack.push(-tempNum);
+                else numStack.push(res(lastOp, numStack.pop(), tempNum));
+            } else lastOp = arr[i];
         }
-        return true;
+
+        int ans = 0;
+        for (int num : numStack) ans += num;
+        return ans;
     }
 
+    private static int res(char op, int a, int b) {
+        if (op == '*') return a * b;
+        else if (op == '/') return a / b;
+        else if (op == '+') return a + b; //其实加减运算可以忽略
+        else return a - b;
+    }
 }
 
 /*
